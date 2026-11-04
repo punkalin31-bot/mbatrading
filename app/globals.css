@@ -38,8 +38,10 @@
 .session-card-body { display: grid; grid-template-columns: minmax(44px, .74fr) minmax(0, 1.26fr); align-items: center; gap: clamp(7px, 4cqi, 15px); }
 .sessions .session-card .analog-clock { width: 100%; max-width: 106px; height: auto; margin: 0; filter: none; }
 .clock-compact .clock-ring { stroke: rgb(var(--glow)/.24); stroke-width: 4; }
-.clock-compact .clock-arc { fill: none; stroke: rgb(var(--glow)/.6); stroke-width: 4; stroke-linecap: round; stroke-dasharray: 222 315; }
-.session-live .clock-arc { stroke: rgb(var(--glow)); }
+.clock-compact .clock-arc { fill: none; stroke-width: 5; stroke-linecap: round; }
+.clock-arc-window { stroke: rgb(var(--glow)/.46); }
+.session-live .clock-arc-window { stroke: rgb(var(--glow)/.30); }
+.clock-arc-progress { stroke: rgb(var(--glow)); }
 .clock-compact .clock-hour, .clock-compact .clock-minute { stroke: var(--text); }
 .clock-compact .clock-second { stroke: rgb(var(--glow)); }
 .clock-compact .clock-pin { fill: rgb(var(--glow)); }

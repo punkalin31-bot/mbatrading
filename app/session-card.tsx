@@ -31,13 +31,14 @@ export function sessionWindow(now: Date, zone: string, start: number, end: numbe
   while (isWeekend() || localNow >= at(end)) day.setUTCDate(day.getUTCDate() + 1);
   const opens = resolve(at(start));
   const closes = resolve(at(end));
-  return {open, opens, closes, seconds: Math.ceil(((open ? closes : opens) - now.getTime()) / 1000)};
+  const elapsedHours = open ? (localNow - at(start)) / 3600000 : 0;
+  return {open, opens, closes, elapsedHours, seconds: Math.ceil(((open ? closes : opens) - now.getTime()) / 1000)};
 }
 
 export default function SessionCard({name,zone,start,end,now}:{
   name:string;zone:string;start:number;end:number;now:Date;
 }) {
-  const {open, opens, closes, seconds} = sessionWindow(now, zone, start, end);
+  const {open, opens, closes, elapsedHours, seconds} = sessionWindow(now, zone, start, end);
   const pad = (n: number) => String(n).padStart(2, '0');
   const countdown = [Math.floor(seconds / 3600), Math.floor(seconds / 60) % 60, seconds % 60].map(pad).join(':');
   const dayLabel = dateRO.format(opens) === dateRO.format(now) ? 'Azi' : weekdayRO.format(opens);
@@ -47,7 +48,7 @@ export default function SessionCard({name,zone,start,end,now}:{
       {open && <span className="session-live-badge">LIVE</span>}
     </div>
     <div className="session-card-body">
-      <AnalogClock now={now} zone={zone} label={name} compact/>
+      <AnalogClock now={now} zone={zone} label={name} compact sessionArc={{start, end, elapsedHours}}/>
       <div className="session-countdown">
         <span>{open ? 'Se închide în' : 'Se deschide în'}</span>
         <strong>{countdown}</strong>
